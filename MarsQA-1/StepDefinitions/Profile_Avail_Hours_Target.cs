@@ -9,48 +9,36 @@ namespace MarsQA_1.StepDefinitions
     [Binding]
     public class Profile_Avail_Hours_TargetSteps
     {
-        [Given(@"the trader updates first and last name")]
-        public void GivenTheTraderUpdatesFirstAndLastName()
+        ProfileUpdate profileupdate = new ProfileUpdate();
+
+        [Given(@"the trader updates '(.*)' first name and '(.*)' last name")]
+        public void GivenTheTraderUpdatesFirstNameAndLastName(string FirstName, string LastName)
         {
-            ProfileUpdate pu = new ProfileUpdate();
-            pu.UpdateFirstnLastName();
+            profileupdate.UpdateProfileTitle(FirstName, LastName);
         }
-        
+
         [Given(@"the trader selects desired option for availability")]
         public void GivenTheTraderSelectsDesiredOptionForAvailability()
         {
-            ProfileUpdate pu = new ProfileUpdate();
-            pu.UpdateAvailability();
+            profileupdate.UpdateAvailability();
         }
-        
+
         [Given(@"the trader selects desired option for Hours")]
         public void GivenTheTraderSelectsDesiredOptionForHours()
         {
-            ProfileUpdate pu = new ProfileUpdate();
-            pu.UpdateHours();
+            profileupdate.UpdateHours();
         }
         
         [Given(@"the trader selects desired option for EarnTarget")]
         public void GivenTheTraderSelectsDesiredOptionForEarnTarget()
         {
-            ProfileUpdate pu = new ProfileUpdate();
-            pu.UpdateEarnTarget();
+            profileupdate.UpdateEarnTarget();
         }
-        
-        [Then(@"the changes are shown in the title")]
-        public void ThenTheChangesAreShownInTheTitle()
+
+        [Then(@"the changes are shown in the '(.*)'")]
+        public void ThenTheChangesAreShownInThe(string Title)
         {
-            var actualMsg = Helpers.Driver.driver.FindElement(By.XPath("//div[@class = 'title']")).Text;
-            Console.WriteLine("The updated details are : " + actualMsg);
-            var expectedMsg = "Naxeer Khan";
-            Assert.That(actualMsg, Is.EqualTo(expectedMsg));
-        }
-        
-        [Then(@"the successful message is shown")]
-        public void ThenTheSuccessfulMessageIsShown()
-        {
-            ProfileUpdate pu = new ProfileUpdate();
-            pu.MessageValication();
+            profileupdate.UpdatedTitleShown(Title);
         }
     }
 }

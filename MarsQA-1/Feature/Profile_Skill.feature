@@ -35,7 +35,7 @@ Scenario: Add new skill without level
 	And adds new '<SkillName>' skill without selecting level '<SkillLevel>'
 	Then the user should see the'<ErrorMessage>' message displayed on my listings
 	Examples: 
-    | SkillName | SkillLevel         | ErrorMessage |
+    | SkillName | SkillLevel         | ErrorMessage							 |
     | C#        | Choose Skill Level |Please enter skill and experience level| 
 
 @EditSkills

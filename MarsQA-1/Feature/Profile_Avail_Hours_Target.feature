@@ -4,18 +4,30 @@
 	I want to be able to successfully update my availability information
 
 @profileUpdate
-Scenario: Update First and Last Name
-	Given the trader updates first and last name
-	Then the changes are shown in the title
+Scenario: Update Title
+	Given the trader updates '<FirstName>' first name and '<LastName>' last name
+	Then the changes are shown in the '<Title>'
+	Examples: 
+	|FirstName	  | LastName	 | Title			 |
+	|Naxeer       | Khan         | Naxeer Khan       |
 
 Scenario: Update availability
 	Given the trader selects desired option for availability
-	Then the successful message is shown
+	Then the toast message '<SuccessMessage>' is shown
+	Examples: 
+	| SuccessMessage       |
+	| Availability updated |
 
 Scenario: Update Hours
 	Given the trader selects desired option for Hours
-	Then the successful message is shown
+	Then the toast message '<SuccessMessage>' is shown
+	Examples: 
+	| SuccessMessage       |
+	| Availability updated |
 
 Scenario: Update EarnTarget
 	Given the trader selects desired option for EarnTarget
-	Then the successful message is shown
+	Then the toast message '<SuccessMessage>' is shown
+	Examples: 
+	| SuccessMessage       |
+	| Availability updated |

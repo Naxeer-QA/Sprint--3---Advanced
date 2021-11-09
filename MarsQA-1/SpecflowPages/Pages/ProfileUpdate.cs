@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 using System;
@@ -13,6 +14,7 @@ namespace MarsQA_1.SpecflowPages.Pages
         {
             PageFactory.InitElements(Helpers.Driver.driver, this);
         }
+
         #region  Initialize Web Elements 
         //Edit profile title
         [FindsBy(How = How.XPath, Using = "//div[@class = 'title']/i[@class = 'dropdown icon']")]
@@ -79,29 +81,33 @@ namespace MarsQA_1.SpecflowPages.Pages
 
         #endregion
 
-        #region Update First n Last Name
-        public void UpdateFirstnLastName()
+        #region Function to update profile title
+        public void UpdateProfileTitle(string FirstName, string LastName)
         {
             Helpers.Driver hd = new Helpers.Driver();
             hd.PageScrollDown();
             editTitle.Click();
-            if(editFirstName != null)
-            {
-                Thread.Sleep(4000);
-                editFirstName.Clear();
-                editFirstName.SendKeys("Naxeer");
-            }
-            if(editLastName != null)
-            {
-                editLastName.Clear();
-                editLastName.SendKeys("Khan");
-            }
+            Thread.Sleep(2000);
+            editFirstName.Clear();
+            editFirstName.SendKeys(FirstName);
+            editLastName.Clear();
+            editLastName.SendKeys(LastName);
             saveBtn.Click();
-            Thread.Sleep(3000);
         }
         #endregion
 
-        #region Update availability
+        #region Function for updated title
+        public void UpdatedTitleShown(string Title)
+        {
+            var ActualMsg = Helpers.Driver.driver.FindElement(By.XPath("//div[@class = 'title']")).Text;
+            Console.WriteLine("The updated details are : " + ActualMsg);
+            var ExpectedMsg = Title;
+            var NoMsg = "";
+            Assert.That(ActualMsg, Is.AnyOf(ExpectedMsg, NoMsg));
+        }
+        #endregion
+
+        #region Function for availability
         public void UpdateAvailability()
         {
             editIconForAvailability.Click();
