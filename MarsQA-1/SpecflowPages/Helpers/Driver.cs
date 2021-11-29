@@ -31,18 +31,16 @@ namespace MarsQA_1.Helpers
         //Implicit Wait
         public static void TurnOnWait()
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(8);
         }
-
         public static void NavigateUrl()
         {
             driver.Navigate().GoToUrl(BaseUrl);
         }
-
         //Close the browser
         public static void Close()
         {
+            TurnOnWait();
             driver.Quit();
         }
 

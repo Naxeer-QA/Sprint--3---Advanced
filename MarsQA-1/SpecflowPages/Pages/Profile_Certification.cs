@@ -223,8 +223,13 @@ namespace MarsQA_1.SpecflowPages.Pages
                 if (tdElement.Text == ExistingAward)
                 {
                     Console.WriteLine("Matched Existing td : " + tdElement.Text);
-                    IWebElement ew = tdElement.FindElement(By.XPath("(//i[@class='outline write icon'])[5]"));
-                    ew.Click();
+                    //IWebElement ew = tdElement.FindElement(By.XPath("(//i[@class='outline write icon'])[5]"));
+                    //ew.Click();
+                    bool x = Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'fourth']//table/tbody/tr/td[contains(., 'C')]/following-sibling::*/span/i[@class = 'outline write icon']")).Displayed;
+                    if(x == true)
+                    {
+                        Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'fourth']//table/tbody/tr/td[contains(., 'C')]/following-sibling::*/span/i[@class = 'outline write icon']")).Click();
+                    }
                     editCertificateInput.Clear();
                     editCertificateInput.SendKeys(CertificationName);
                     editAwardedFrom.Clear();
@@ -249,8 +254,14 @@ namespace MarsQA_1.SpecflowPages.Pages
                 if (tdElement.Text == ExistingAward)
                 {
                     Console.WriteLine("Searched TD is : " + tdElement.Text);
-                    IWebElement removeBtn = Helpers.Driver.driver.FindElement(By.XPath("(//i[@class='remove icon'])[4]"));
-                    removeBtn.Click();
+                    //IWebElement removeBtn = Helpers.Driver.driver.FindElement(By.XPath("(//i[@class='remove icon'])[4]"));
+                    //removeBtn.Click();
+                    var removeXpath = Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'fourth']//table/tbody/tr/td[contains(., 'Cypress')]/following-sibling::*/span/i[@class = 'remove icon']"));
+                    bool x = removeXpath.Displayed;
+                    if(x == true)
+                    {
+                        removeXpath.Click();
+                    }
                     break;
                 }
             }

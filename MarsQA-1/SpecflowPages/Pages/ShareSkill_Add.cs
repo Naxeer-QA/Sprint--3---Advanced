@@ -1,10 +1,10 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using MarsQA_1.Helpers;
-using System;
 using AutoItX3Lib;
 using System.Threading;
 using OpenQA.Selenium.Interactions;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace MarsQA_1.SpecflowPages.Pages
@@ -103,6 +103,7 @@ namespace MarsQA_1.SpecflowPages.Pages
 
         //Enter Skill Exchange
         [FindsBy(How = How.XPath, Using = "//div[@class='form-wrapper']//input[@placeholder='Add new tag']")]
+        //[FindsBy(How = How.XPath, Using = "//input[contains(@name,'skillTrades')])[1]")]
         private IWebElement SkillExchange { get; set; }
 
         //Enter the amount for Credit
@@ -117,6 +118,9 @@ namespace MarsQA_1.SpecflowPages.Pages
         [FindsBy(How = How.XPath, Using = "//div[10]//div[2]//div[1]//div[2]//div[1]//input[1]")]
         //[FindsBy(How = How.XPath, Using = "//label[text()='Hidden']")]
         public IWebElement hiddenOption { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "(//input[contains(@name,'skillTrades')])[2]")]
+        public IWebElement CreditOption { get; set; }
 
         //Upload file button
         [FindsBy(How = How.XPath, Using = "//i[@class = 'huge plus circle icon padding-25']")]
@@ -138,16 +142,15 @@ namespace MarsQA_1.SpecflowPages.Pages
         public void EnterSkillRelevantItems()
         {
             PopulateInCollection(@"D:\Internship\ThirdSprint\onboarding.specflow-master\onboarding.specflow-master\MarsQA-1\SpecflowTests\Data\Mars.xlsx", "AddSkill");
-            Title.SendKeys(ReadData(3, "Title"));
-            Description.SendKeys(ReadData(3, "Description"));
+            Title.SendKeys(ReadData(2, "Title"));
+            Description.SendKeys(ReadData(2, "Description"));
             CategoryDropDown.SendKeys(ReadData(2, "Category"));
             SubCategoryDropDown.SendKeys(ReadData(2, "SubCategory"));
-            Tags.SendKeys(ReadData(3, "Tags"));
+            Tags.SendKeys(ReadData(2, "Tags"));
             Tags.SendKeys(Keys.Enter);
             hd.PageScrollDown();
             ServiceTypeOptions_HourlyBasis.SendKeys(ReadData(2, "ServiceType"));
             LocationType.SendKeys(ReadData(2, "LocationType"));
-            Thread.Sleep(4000);
             StartDateDropDown.Clear();
             //TODO : Below statement wrongly pick the row data
             //StartDateDropDown.SendKeys(ReadData(2, "Startdate"));
@@ -157,32 +160,32 @@ namespace MarsQA_1.SpecflowPages.Pages
             //EndDateDropDown.SendKeys(ReadData(2, "Enddate"));
             EndDateDropDown.SendKeys("12/12/2022");
             EnterAvailableDays();
-            SkillTrade.SendKeys(ReadData(2, "SkillTrade"));
-            SkillExchange.SendKeys(ReadData(2, "Skill-Exchange"));
-            Actions act = new Actions(Driver.driver);
-            act.Click(SkillExchange)
-                .SendKeys(Keys.Enter)
-                .Build()
-                .Perform();
-            uploadFileBtn.Click();
-            AutoItX3 autoIT = new AutoItX3();
-            autoIT.WinWait("[CLASS:Open]", "", 4);
-            autoIT.WinActivate("Open");
-            autoIT.Send(@"C:\Users\Admin\Desktop\IC_DummyFile.txt");
-            autoIT.Send("{Enter}");
-            hd.PageScrollDown();
-            Driver.TurnOnWait();
+            //SkillTrade.SendKeys(ReadData(3, "SkillTrade"));
+            //EnterSkillExchange();
+            ExchangeSkills();
+            FileUpload();
+            ChooseActiveOrHidden();
+            Thread.Sleep(3000);
+            Save.Click();
 
-            if (ReadData(2, "Active") != "Hidden")
+        }
+        #endregion
+
+        #region Function for Exchange Skills
+        public void ExchangeSkills()
+        {
+            if (ReadData(2, "SkillTrade") == "Skill-Exchange")
             {
-                ActiveOption.Click();
+                SkillTrade.Click();
+                SkillExchange.SendKeys(ReadData(2, "Skill-Exchange"));
+                SkillExchange.SendKeys(Keys.Enter);
             }
             else
             {
-                hiddenOption.Click();
+                SkillTrade.Click();
+                CreditAmount.Clear();
+                CreditAmount.SendKeys(ReadData(2, "Credit"));
             }
-            Save.Click();
-
         }
         #endregion
 
@@ -255,17 +258,159 @@ namespace MarsQA_1.SpecflowPages.Pages
                         .SendKeys(ReadData(2, "Endtime"));
                     break;
             }
-            #endregion
+            
         }
-        public void ValidateSuccessMessage()
+        #endregion 
+
+        #region Function to upload file
+        public void FileUpload()
         {
-            PopulateInCollection(@"D:\Internship\ThirdSprint\onboarding.specflow-master\onboarding.specflow-master\MarsQA-1\SpecflowTests\Data\Mars.xlsx", "AddSkill");
-            var ActualMsg = Driver.driver.FindElement(By.XPath(
-                "//div[@class ='ns-box ns-growl ns-effect-jelly ns-type-success ns-show']/div[@class = 'ns-box-inner']")).Text;
-            Console.WriteLine("Captured message is : " + ActualMsg);
-            var ExpectedMsg = ReadData(2, "SuccessMessage");
-            var NoMsg = "";
-            Assert.That(ActualMsg, Is.AnyOf(ExpectedMsg, NoMsg));
+            hd.PageScrollDown();
+            uploadFileBtn.Click();
+            AutoItX3 autoIT = new AutoItX3();
+            autoIT.WinWaitActive("[CLASS:Open]", "", 3);
+            autoIT.Send(@"C:\Users\Admin\Desktop\IC_DummyFile.txt");
+            autoIT.Send("{Enter}");
         }
+        #endregion
+
+        #region Function to update file upload
+        public void UpdateFileUpload()
+        {
+            hd.PageScrollDown();
+            uploadFileBtn.Click();
+            AutoItX3 autoIT = new AutoItX3();
+            autoIT.WinWaitActive("[CLASS:Open]", "", 3);
+            autoIT.Send(@"C:\Users\Admin\Desktop\Update_IC.txt");
+            autoIT.Send("{Enter}");
+        }
+        #endregion
+
+        #region Function to choose Active/Hidden option
+        public void ChooseActiveOrHidden()
+        {
+            if (ReadData(2, "Active") != "Hidden")
+            {
+                ActiveOption.Click();
+            }
+            else
+            {
+                hiddenOption.Click();
+            }
+        }
+        #endregion
+
+        #region Function to enter skill exchange
+        public void EnterSkillExchange()
+        {
+            Actions act = new Actions(Driver.driver);
+            SkillExchange.SendKeys(ReadData(2, "Skill-Exchange"));
+            act.Click(SkillExchange)
+                .SendKeys(Keys.Enter)
+                .Build()
+                .Perform();
+           }
+        #endregion
+
+        #region Function to enter tags
+        public void EnterTags()
+        {
+            if(Tags != null)
+            {
+                Actions action = new Actions(Driver.driver);
+                action.Click(Tags)
+                    .SendKeys(Keys.Backspace)
+                    .Build()
+                    .Perform();
+                Tags.SendKeys(ReadData(2, "Tags"));
+                Tags.SendKeys(Keys.Enter);
+                hd.PageScrollDown();
+            }
+            else
+            {
+                return;
+            }
+        }
+        #endregion
+
+        #region Function to Update existing skill
+        public void UpdateSkill()
+        {
+            PopulateInCollection(@"D:\Internship\ThirdSprint\onboarding.specflow-master\onboarding.specflow-master\MarsQA-1\SpecflowTests\Data\Mars.xlsx", "UpdateSkill");
+            Title.Clear();
+            Title.SendKeys(ReadData(2, "Title"));
+            Description.Clear();
+            Description.SendKeys(ReadData(2, "Description"));
+            CategoryDropDown.SendKeys(ReadData(2, "Category"));
+            SubCategoryDropDown.SendKeys(ReadData(2, "SubCategory"));
+            EnterTags();
+            ServiceTypeOptions_HourlyBasis.SendKeys(ReadData(2, "ServiceType"));
+            LocationType.SendKeys(ReadData(2, "LocationType"));
+            StartDateDropDown.Clear();
+            //TODO : Below statement wrongly pick the row data
+            //StartDateDropDown.SendKeys(ReadData(2, "Startdate"));
+            StartDateDropDown.SendKeys("12/12/2021");
+            EndDateDropDown.Clear();
+            //TODO : Below statement wrongly pick the row data
+            //EndDateDropDown.SendKeys(ReadData(2, "Enddate"));
+            EndDateDropDown.SendKeys("12/12/2022");
+            EnterAvailableDays();
+            CreditOption.Click();
+            CreditAmount.SendKeys("5");
+            UpdateFileUpload();
+            ChooseActiveOrHidden();
+            Thread.Sleep(3000);
+            Save.Click();
+        }
+        #endregion
+
+        #region Funtion to show added skill on the manage listings page
+        public void ValidateAddedSkillIsListed()
+        {
+            //Find table
+            IWebElement Table = Driver.driver.FindElement(By.XPath("//table[@class = 'ui striped table']/tbody"));
+
+            //find Table row
+            IList<IWebElement> TableRow = Table.FindElements(By.XPath("tr"));
+
+            foreach(var row in TableRow)
+            {
+                bool x = row.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Selenium Web Driver')]")).Displayed;
+                if(x == true)
+                {
+                    System.Console.WriteLine("Capture Title dispalyed as : " + row.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Selenium Web Driver')]")).Text);
+                    break;
+                }
+            }
+            var Actual = Driver.driver.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Selenium Web Driver')]")).Text;
+            var Expected = "Selenium Web Driver";
+            Assert.That(Actual, Is.EqualTo(Expected));
+        }
+        #endregion
+
+        #region Funtion to show updated skill on the manage listings page
+        public void ValidateUpdatedSkillIsListed()
+        {
+            //Find table
+            IWebElement Table = Driver.driver.FindElement(By.XPath("//table[@class = 'ui striped table']/tbody"));
+
+            //find Table row
+            IList<IWebElement> TableRow = Table.FindElements(By.XPath("tr"));
+
+            foreach (var row in TableRow)
+            {
+                bool x = row.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Automation using Selenium')]")).Displayed;
+                if (x == true)
+                {
+                    System.Console.WriteLine("Capture Title dispalyed as : " + row.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Automation using Selenium')]")).Text);
+                    break;
+                }
+            }
+            var Actual = Driver.driver.FindElement(By.XPath("//table/tbody/tr/td[contains(., 'Automation using Selenium')]")).Text;
+            var Expected = "Automation using Selenium";
+            Assert.That(Actual, Is.EqualTo(Expected));
+        }
+        #endregion
+
     }
 }

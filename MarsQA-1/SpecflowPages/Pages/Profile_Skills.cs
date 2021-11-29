@@ -84,7 +84,6 @@ namespace MarsQA_1.SpecflowPages.Pages
         [FindsBy(How = How.XPath, Using = "//div[@class = 'fields']//span/input[@value = 'Cancel']")]
         [CacheLookup]
         public IWebElement cancelUpdate { get; set; }
-
         #endregion
 
         #region Add New Skill
@@ -322,11 +321,17 @@ namespace MarsQA_1.SpecflowPages.Pages
         #region Function for validating success message
         public void SkillsSuccessMsg(string SuccessMessage)
         {
-            var ActualMsg = Helpers.Driver.driver.FindElement(By.XPath("//div[@class ='ns-box ns-growl ns-effect-jelly ns-type-success ns-show']/div[@class = 'ns-box-inner']")).Text;
-            Console.WriteLine("Message was caught as : " + ActualMsg);
-            var ExpectedMsg = SuccessMessage;
-            var NoMsg = "";
-            Assert.That(ActualMsg, Is.AnyOf(ExpectedMsg, NoMsg));
+            try
+            {
+                var ActualMsg = Helpers.Driver.driver.FindElement(By.XPath("//div[@class ='ns-box ns-growl ns-effect-jelly ns-type-success ns-show']/div[@class = 'ns-box-inner']")).Text;
+                Console.WriteLine("Message was caught as : " + ActualMsg);
+                var ExpectedMsg = SuccessMessage;
+                var NoMsg = "";
+                Assert.That(ActualMsg, Is.AnyOf(ExpectedMsg, NoMsg));
+            }catch(StaleElementReferenceException sere)
+            {
+                Console.WriteLine("Exception occurred : " +sere);
+            }
         }
         #endregion
     }

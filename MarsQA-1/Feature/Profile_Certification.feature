@@ -38,8 +38,8 @@ Scenario: Edit existing Certification
 	#Then the edited Certification is shown (WILL IMPLEMENT LATER)
 	Then the toast message '<SuccessMessage>' is shown
 	Examples: 
-    | ExistingAward | CertificationName | CertificationFrom | CertificationYear | SuccessMessage								 |
-    |	C			| Cypress           | IndustryConnect   | 2019              | Cypress has been updated to your certification | 
+    | ExistingAward | CertificationName | CertificationFrom | CertificationYear | SuccessMessage |
+    | Selenium      | Cypress           | IndustryConnect   | 2019              | Cypress has been updated to your certification | 
 
 Scenario: Validate error message for updating Certification with empty fields
 	Given the user clicks on Certification tab under profile tab
@@ -56,5 +56,5 @@ Scenario: Validate error message for updating Certification with empty fields
 	#Then the deleted Certification '<ExistingAward>' is not shown in my listings (WILL IMPLEMENT LATER)
 	Then the toast message '<SuccessMessage>' is shown
 	Examples: 
-    | ExistingAward | SuccessMessage								 |
-	| Cypress       | Cypress has been deleted from you certification| 
+    | ExistingAward | SuccessMessage                                   |
+    | Cypress       | Cypress has been deleted from your certification |
