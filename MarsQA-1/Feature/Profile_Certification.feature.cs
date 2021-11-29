@@ -207,7 +207,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Edit existing Certification")]
         [NUnit.Framework.CategoryAttribute("EditCertification")]
-        [NUnit.Framework.TestCaseAttribute("C", "Cypress", "IndustryConnect", "2019", "Cypress has been updated to your certification", null)]
+        [NUnit.Framework.TestCaseAttribute("Selenium", "Cypress", "IndustryConnect", "2019", "Cypress has been updated to your certification", null)]
         public virtual void EditExistingCertification(string existingAward, string certificationName, string certificationFrom, string certificationYear, string successMessage, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -295,7 +295,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("User deletes Certification")]
         [NUnit.Framework.CategoryAttribute("DeleteCertification")]
-        [NUnit.Framework.TestCaseAttribute("Cypress", "Cypress has been deleted from you certification", null)]
+        [NUnit.Framework.TestCaseAttribute("Cypress", "Cypress has been deleted from your certification", null)]
         public virtual void UserDeletesCertification(string existingAward, string successMessage, string[] exampleTags)
         {
             string[] @__tags = new string[] {

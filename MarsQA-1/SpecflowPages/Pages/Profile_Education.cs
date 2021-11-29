@@ -228,8 +228,12 @@ namespace MarsQA_1.SpecflowPages.Pages
                 if (tdElement.Text == ExistingDegree)
                 {
                     Console.WriteLine("Matched existing TD is : " + tdElement.Text);
-                    IWebElement clickEditBtn = Helpers.Driver.driver.FindElement(By.XPath("(//i[@class='outline write icon'])[5]"));
-                    clickEditBtn.Click();
+                    var editXpath= Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'third']//table/tbody/tr/td[contains(., 'Ph.D')]/following-sibling::*/span/i[@class = 'outline write icon']"));
+                    bool x = editXpath.Displayed;
+                    if(x == true)
+                    {
+                        editXpath.Click();
+                    }
                     editCollegeInput.Clear();
                     editCollegeInput.SendKeys(CollegeName);
                     editCountryDropdown.SendKeys(CollegeCountry);
@@ -258,10 +262,12 @@ namespace MarsQA_1.SpecflowPages.Pages
                 if (tdElement.Text == ExistingDegree)
                 {
                     Console.WriteLine("Matched existing TD is : " + tdElement.Text);
-                    IWebElement EditBtn = Helpers.Driver.driver.FindElement(By.XPath("(//i[@class='outline write icon'])[6]"));
-                    EditBtn.Click();
+                    bool x = Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'third']//table/tbody/tr/td[contains(.,'Graduation')]/following-sibling::*/span/i[@class = 'outline write icon']")).Displayed;
+                    if(x == true)
+                    {
+                        Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'third']//table/tbody/tr/td[contains(.,'Graduation')]/following-sibling::*/span/i[@class = 'outline write icon']")).Click();
+                    }
                     editDegreeInput.Clear();
-                    //degreeInput.Clear();
                     editDegreeInput.SendKeys(CollegeName);
                     editGraduationYear.SendKeys(GraduationYear);
                     updateEducation.Click();
@@ -283,8 +289,12 @@ namespace MarsQA_1.SpecflowPages.Pages
                 if (tdElement.Text == CollegeName)
                 {
                     Console.WriteLine("Searched TD is : " + tdElement.Text);
-                    IWebElement removeBtn = Helpers.Driver.driver.FindElement(By.XPath("(//i[@class='remove icon'])[5]"));
-                    removeBtn.Click();
+                    var removeEducation = Helpers.Driver.driver.FindElement(By.XPath("//div[@data-tab = 'third']//table/tbody/tr/td[contains(., 'Nadwa')]/following-sibling::*/span/i[@class = 'remove icon']"));
+                    bool x = removeEducation.Displayed;
+                    if(x == true)
+                    {
+                        removeEducation.Click();
+                    }
                     break;
                 }
             }

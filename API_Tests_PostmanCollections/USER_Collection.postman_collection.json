@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "914a887a-4ef2-44d2-8b81-e91928582092",
+		"name": "USER_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Verify user logs into the system",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/login?username=Naxeer&password=Khan",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "Naxeer",
+							"description": "(Required) The user name for login"
+						},
+						{
+							"key": "password",
+							"value": "Khan",
+							"description": "(Required) The password for login in clear text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create User\", ()=>{\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"1516\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1516,\n    \"username\": \"Daddy\",\n    \"firstName\": \"Dad\",\n    \"lastName\": \"Father \",\n    \"email\": \"dad_father@gmail.com\",\n    \"password\": \"dadfather\",\n    \"phone\": \"1234567890\",\n    \"userStatus\": -7081218\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Creating list of users with given input array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Create user with given input array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": 2021,\n        \"username\": \"SummerWinter\",\n        \"firstName\": \"Summer\",\n        \"lastName\": \"Winter\",\n        \"email\": \"summer@gmail.com\",\n        \"password\": \"summerwinter\",\n        \"phone\": \"0987654321\",\n        \"userStatus\": 2021\n    },\n    {\n        \"id\": 73122755,\n        \"username\": \"veniam deserunt sunt ut\",\n        \"firstName\": \"in Duis est\",\n        \"lastName\": \"veniam commodo dolore deserunt\",\n        \"email\": \"veniam culpa nulla irure\",\n        \"password\": \"adipisicing ex minim\",\n        \"phone\": \"culpa proident minim enim fugiat\",\n        \"userStatus\": 91568647\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/createWithArray",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"createWithArray"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify user by user name - postCreation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create User operation success\", ()=>{\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.eql(1516);\r",
+							"    pm.expect(jsonData.username).to.be.eql(\"Daddy\");\r",
+							"    pm.expect(jsonData.firstName).to.be.eql(\"Dad\");\r",
+							"    //pm.expect(jsonData.lastName).to.be.eql(\"Father\");\r",
+							"    pm.expect(jsonData.email).to.be.eql(\"dad_father@gmail.com\");\r",
+							"    pm.expect(jsonData.password).to.be.eql(\"dadfather\");\r",
+							"    pm.expect(jsonData.phone).to.be.eql(\"1234567890\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "Daddy",
+							"description": "(Required) The name that needs to be fetched. Use user1 for testing. "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Updated user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Update User\", ()=>{\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"1982\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1982,\n    \"username\": \"Naxeer\",\n    \"firstName\": \"Nax\",\n    \"lastName\": \"eer \",\n    \"email\": \"naxeer@gmail.com\",\n    \"password\": \"dadfather\",\n    \"phone\": \"1234567890\",\n    \"userStatus\": -7081218\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "Daddy",
+							"description": "(Required) name that need to be updated"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify user by user name - postUpdate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "Naxeer",
+							"description": "(Required) The name that needs to be fetched. Use user1 for testing. "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Delete User\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"Naxeer\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "Naxeer",
+							"description": "(Required) The name that needs to be deleted"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify user  not found - postDelete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", ()=>{\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"pm.test(\"Delete User operation success\", ()=>{\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"error\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"User not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "Naxeer",
+							"description": "(Required) The name that needs to be fetched. Use user1 for testing. "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify User not found to Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () =>{\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/:username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":username"
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "reprehenderit minim cillum eu proident",
+							"description": "(Required) The name that needs to be deleted"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify user logs out current logged in user session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"User logs out successfully\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://petstore.swagger.io/v2"
+		}
+	]
+}

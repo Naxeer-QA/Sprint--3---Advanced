@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "1932b2b4-c279-432c-ad83-0976bd0f7c37",
+		"name": "STORE_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Verify Returns pet inventories by status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "api_key",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "<API Key>",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/inventory",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Placing an Order for a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Order placed for Pet\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.eql(30);\r",
+							"    pm.expect(jsonData.status).to.be.eql(\"placed\");\r",
+							"    pm.expect(jsonData.complete).to.be.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 30,\n    \"petId\": 1000,\n    \"quantity\": 1,\n    \"shipDate\": \"2021-11-25T01:39:26.689Z\",\n    \"status\": \"placed\",\n    \"complete\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/store/order",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Placing an invalid Order for a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", () =>{\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid Order\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"bad input\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": ,\n    \"petId\": 385748710000000,\n    \"quantity\": 4969826500000,\n    \"shipDate\": \"2019-08-31T21:48:42.957Z\",\n    \"status\": \"delivered\",\n    \"complete\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/store/order",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify purchase order by OrderID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Find order by ID\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.be.eql(\"placed\");\r",
+							"    pm.expect(jsonData.complete).to.be.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/order/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "30",
+							"description": "(Required) ID of pet that needs to be fetched"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Order not found by OrderID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () =>{\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Order Not Found\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"error\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"Order not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/order/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "9",
+							"description": "(Required) ID of pet that needs to be fetched"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Order by invalid OrderID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", () =>{\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/order/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "%",
+							"description": "(Required) ID of pet that needs to be fetched"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Delete purchase order by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Delete purchase order\", ()=>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"unknown\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/order/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "30",
+							"description": "(Required) ID of the order that needs to be deleted"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Order not found by OrderID - postDelete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", () =>{\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Order Not Found\", () =>{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.be.eql(\"error\");\r",
+							"    pm.expect(jsonData.message).to.be.eql(\"Order not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/store/order/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "30",
+							"description": "(Required) ID of pet that needs to be fetched"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://petstore.swagger.io/v2"
+		}
+	]
+}
