@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "f68dffc8-5765-4d67-ab68-22747f01c300",
+		"name": "MISCELLANEOUS_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Endpoints",
+			"item": [
+				{
+					"name": "Verify list of dog breeds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Fetch the List of Dog breeds\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dog.ceo/api/breeds/list/all",
+							"protocol": "https",
+							"host": [
+								"dog",
+								"ceo"
+							],
+							"path": [
+								"api",
+								"breeds",
+								"list",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify JSON test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ip.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"ip",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify RESTFUL WEB SERVICES Page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.groupkt.com/post/5c85b92f/restful-rest-webservice-to-get-and-search-states-and-territories-of-a-country.htm",
+							"protocol": "http",
+							"host": [
+								"www",
+								"groupkt",
+								"com"
+							],
+							"path": [
+								"post",
+								"5c85b92f",
+								"restful-rest-webservice-to-get-and-search-states-and-territories-of-a-country.htm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify REDDIT web Page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.reddit.com/r/javascript.json?utm_source=reddit&utm_medium=usertext&utm_name=javascript&utm_content=t1_drb3cdb",
+							"protocol": "https",
+							"host": [
+								"www",
+								"reddit",
+								"com"
+							],
+							"path": [
+								"r",
+								"javascript.json"
+							],
+							"query": [
+								{
+									"key": "utm_source",
+									"value": "reddit"
+								},
+								{
+									"key": "utm_medium",
+									"value": "usertext"
+								},
+								{
+									"key": "utm_name",
+									"value": "javascript"
+								},
+								{
+									"key": "utm_content",
+									"value": "t1_drb3cdb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Key Value insertion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Fetch web page of key value insertion\", () =>{\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.key).to.eql(\"value\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://echo.jsontest.com/insert-key-here/insert-value-here/key/value",
+							"protocol": "http",
+							"host": [
+								"echo",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"insert-key-here",
+								"insert-value-here",
+								"key",
+								"value"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify JSON Webpage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://date.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"date",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Code to validate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Code to Validate\", ()=>{\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.size).to.eql(1);\r",
+									"    pm.expect(jsonData.object_or_array).to.eql(\"array\");\r",
+									"    pm.expect(jsonData.validate).to.eql(true);\r",
+									"    pm.expect(jsonData.empty).to.eql(false);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://validate.jsontest.com/?json=%5BJSON-code-to-validate%5D",
+							"protocol": "http",
+							"host": [
+								"validate",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "json",
+									"value": "%5BJSON-code-to-validate%5D"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://services.groupkt.com/country"
+		}
+	]
+}

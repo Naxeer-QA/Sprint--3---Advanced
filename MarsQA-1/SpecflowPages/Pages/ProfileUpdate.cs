@@ -18,65 +18,66 @@ namespace MarsQA_1.SpecflowPages.Pages
         #region  Initialize Web Elements 
         //Edit profile title
         [FindsBy(How = How.XPath, Using = "//div[@class = 'title']/i[@class = 'dropdown icon']")]
-
+        [CacheLookup]
         public IWebElement editTitle { get; set; }
 
         //Edit First Name
         [FindsBy(How = How.XPath, Using = "//input[@name = 'firstName']")]
-
+        [CacheLookup]
         public IWebElement editFirstName { get; set; }
 
         //Edit Last Name
         [FindsBy(How = How.XPath, Using = "//input[@name = 'lastName']")]
-
+        [CacheLookup]
         public IWebElement editLastName { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//button[text() = 'Save']")]
+        [CacheLookup]
         public IWebElement saveBtn { get; set; }
 
         //Click on edit icon for Availability
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Availability']/../div/span/i[@class = 'right floated outline small write icon']")]
-
+        [CacheLookup]
         public IWebElement editIconForAvailability { get; set; }
 
         //Click on remove icon for Availability
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Availability']/../div//i[@class = 'remove icon']")]
-
+        [CacheLookup]
         public IWebElement removeIconForAvailability { get; set; }
 
         //Click to select availability dropdown options
         [FindsBy(How = How.XPath, Using = "//select[@name = 'availabiltyType']")]
-
+        [CacheLookup]
         public IWebElement availabilityDropdown { get; set; }
 
         //Click on edit icon for Hours
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Hours']/../div//i[@class = 'right floated outline small write icon']")]
-
+        [CacheLookup]
         public IWebElement editIconForHours { get; set; }
 
         //Click on remove icon for Hours
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Hours']/../div//i[@class = 'remove icon']")]
-
+        [CacheLookup]
         public IWebElement removeIconForHours { get; set; }
 
         //Click to select Hour dropdown options
         [FindsBy(How = How.XPath, Using = "//select[@name = 'availabiltyHour']")]
-
+        [CacheLookup]
         public IWebElement hourDropdown { get; set; }
 
         //Click on edit icon for EarnTarget
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Earn Target']/../div//i[@class = 'right floated outline small write icon']")]
-
+        [CacheLookup]
         public IWebElement editIconForEarnTarget { get; set; }
 
         //Click on remove icon for Earn Target
         [FindsBy(How = How.XPath, Using = "//span[strong = 'Earn Target']/../div//i[@class = 'remove icon']")]
-
+        [CacheLookup]
         public IWebElement removeIconForEarnTarget { get; set; }
 
         //Click to select Earn Target dropdown options
         [FindsBy(How = How.XPath, Using = "//select[@name = 'availabiltyTarget']")]
-
+        [CacheLookup]
         public IWebElement earnTargetDropdown { get; set; }
 
         #endregion

@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpecflowPages\Pages\ManageListing.cs" />
     <Compile Include="SpecflowPages\Pages\Profile_Certification.cs" />
     <Compile Include="SpecflowPages\Pages\Profile_Description.cs" />
     <Compile Include="SpecflowPages\Pages\Profile_Education.cs" />
